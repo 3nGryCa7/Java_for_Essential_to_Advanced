@@ -1,0 +1,13 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.37
+    volumes:
+      - docker-mysql-data:/var/lib/docker/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "toor"
+    ports:
+      - "8306:3306"
+
+volumes:
+  docker-mysql-data:
