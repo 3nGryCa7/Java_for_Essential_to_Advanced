@@ -1,7 +1,7 @@
 /* 作為LinkedQueue 的 Node */
 /* Rename: LinkedCard */
 
-package card;
+package Dealer.src.card;
 
 public class Card {
 

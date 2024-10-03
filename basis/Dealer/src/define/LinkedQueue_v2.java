@@ -1,9 +1,9 @@
-package define;
+package Dealer.src.define;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
-import card.Card;
+import Dealer.src.card.Card;
 
 public class LinkedQueue_v2<T> implements Queue<T> {
     int count;

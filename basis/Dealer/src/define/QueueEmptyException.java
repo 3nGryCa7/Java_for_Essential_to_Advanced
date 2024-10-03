@@ -1,4 +1,4 @@
-package define;
+package Dealer.src.define;
 
 public class QueueEmptyException extends Exception {
 	public QueueEmptyException() {

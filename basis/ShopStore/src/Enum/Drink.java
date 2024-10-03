@@ -1,4 +1,4 @@
-package Enum;
+package ShopStore.src.Enum;
 
 public enum Drink {
     BLACK_TEA(20,"紅茶"),

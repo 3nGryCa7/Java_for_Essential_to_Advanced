@@ -1,3 +1,5 @@
+package Registrationv2.src;
+
 public class Student {
     private String ID;
     private Integer school;

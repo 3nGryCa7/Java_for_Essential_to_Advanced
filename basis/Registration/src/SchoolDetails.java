@@ -1,3 +1,5 @@
+package Registration.src;
+
 import java.util.ArrayList;
 
 class SchoolDetails {

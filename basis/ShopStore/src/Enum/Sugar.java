@@ -1,4 +1,4 @@
-package Enum;
+package ShopStore.src.Enum;
 
 public enum Sugar {
     REGULAR(10, "正常糖"),

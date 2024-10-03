@@ -1,7 +1,7 @@
-package methods;
-import card.Card;
-import card.Card.*;
-import define.*;
+package Dealer.src.methods;
+import Dealer.src.card.Card;
+import Dealer.src.card.Card.*;
+import Dealer.src.define.*;
 
 import java.util.Random;
     

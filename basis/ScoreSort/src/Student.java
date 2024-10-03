@@ -1,3 +1,5 @@
+package ScoreSort.src;
+
 public class Student {
     private String Id;
     private Integer Chinese;

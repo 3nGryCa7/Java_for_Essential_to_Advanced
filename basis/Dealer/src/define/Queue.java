@@ -1,4 +1,4 @@
-package define;
+package Dealer.src.define;
 
 public interface Queue<T> {
 

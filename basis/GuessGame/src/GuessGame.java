@@ -1,3 +1,5 @@
+package GuessGame.src;
+
 import java.util.Random;
 import java.util.Scanner;
 

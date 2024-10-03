@@ -1,5 +1,5 @@
 
-package define;
+package Dealer.src.define;
 
 public interface Process<T> {
 

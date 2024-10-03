@@ -1,4 +1,4 @@
-package define;
+package Dealer.src.define;
 
 public class Node<T> {
 	T entry;

@@ -1,3 +1,5 @@
+package Registration.src;
+
 import java.util.Comparator;
 
 public class ScoresSort implements Comparator<Student> {

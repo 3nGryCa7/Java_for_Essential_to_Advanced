@@ -1,3 +1,5 @@
+package Registration.src;
+
 import java.util.Arrays;
 
 public class Student {
