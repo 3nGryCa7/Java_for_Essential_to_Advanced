@@ -1,4 +1,4 @@
-package TicTacToe;
+package TicTacToe.src;
 
 public class TicTacToe {
 

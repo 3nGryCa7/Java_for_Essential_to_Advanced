@@ -1,4 +1,4 @@
-package DrinkStore;
+package DrinkStore.src;
 
 public enum Drink {
     BLACK_TEA(1, 20, "紅茶"),

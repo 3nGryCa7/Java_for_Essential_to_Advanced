@@ -1,4 +1,4 @@
-package DrinkStore;
+package DrinkStore.src;
 
 import java.util.Scanner;
 
