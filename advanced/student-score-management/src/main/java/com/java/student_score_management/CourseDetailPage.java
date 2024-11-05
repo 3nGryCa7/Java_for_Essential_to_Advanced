@@ -39,7 +39,7 @@ public class CourseDetailPage extends JPanel {
 
     private JPanel getButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));  // 將網格設為 3 行 1 列，以包含 3 個按鈕
+        buttonPanel.setLayout(new GridLayout(4, 1, 10, 10));
 
         JButton addStudentButton = new JButton("Add Student");
         addStudentButton.addActionListener(e -> showAddStudentDialog());
@@ -52,6 +52,11 @@ public class CourseDetailPage extends JPanel {
         JButton deleteGradeButton = new JButton("Delete Grade");
         deleteGradeButton.addActionListener(e -> deleteSelectedGrade());
         buttonPanel.add(deleteGradeButton);
+
+        JButton showGraphButton = new JButton("Exam Distribution");
+        showGraphButton.addActionListener(e -> showExamDistributionGraph());
+        buttonPanel.add(showGraphButton);
+
         return buttonPanel;
     }
 
@@ -135,4 +140,20 @@ public class CourseDetailPage extends JPanel {
         }
     }
 
+    private void showExamDistributionGraph() {
+        JTextField examIdField = new JTextField();
+
+        Object[] message = {
+                "Exam ID:", examIdField,
+        };
+
+        int option = JOptionPane.showConfirmDialog(this, message, "Show Distribution", JOptionPane.OK_CANCEL_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            int examId = Integer.parseInt(examIdField.getText());
+
+            List<Double> scores = databaseManager.getGrades(course.getCourseId(), examId);
+            ChartGenerator generator = new ChartGenerator();
+            generator.displayGradeDistributionChart(scores);
+        }
+    }
 }

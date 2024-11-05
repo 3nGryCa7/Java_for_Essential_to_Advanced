@@ -1,36 +1,57 @@
 package com.java.student_score_management;
 
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import javax.swing.*;
-import java.awt.*;
-
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
-
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 public class ChartGenerator {
-    public static void generateGradeDistributionChart(double[] scores) {
+
+    public ChartGenerator() {}
+
+    public void displayGradeDistributionChart(List<Double> grades) {
+        double mean = calculateMean(grades);
+        double stdDev = calculateStandardDeviation(grades, mean);
+
         HistogramDataset dataset = new HistogramDataset();
-        dataset.addSeries("Scores", scores, 10);
+        dataset.addSeries("Grades", grades.stream().mapToDouble(Double::doubleValue).toArray(), 10);
 
         JFreeChart chart = ChartFactory.createHistogram(
-                "Score Distribution", // Chart title
-                "Score", // X-axis label
-                "Number", // Y-axis label
-                dataset, // Dataset
-                PlotOrientation.VERTICAL, // Plot orientation
-                true, // Show legend
-                true, // Use tooltips
-                false // Configure chart to generate URLs?
+                "Grade Distribution",
+                "Grade",
+                "Frequency",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
         );
 
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesLinesVisible(0, true);
+
         ChartPanel chartPanel = new ChartPanel(chart);
-        JFrame frame = new JFrame("Score Distribution Chart");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(chartPanel, BorderLayout.CENTER);
+        JFrame frame = new JFrame("Grade Distribution Chart");
+        frame.setContentPane(chartPanel);
         frame.pack();
         frame.setVisible(true);
     }
+
+    public double calculateMean(List<Double> grades) {
+        return grades.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+    public double calculateStandardDeviation(List<Double> grades, double mean) {
+        return Math.sqrt(grades.stream()
+                .mapToDouble(grade -> Math.pow(grade - mean, 2))
+                .average()
+                .orElse(0.0));
+    }
+
 }

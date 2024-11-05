@@ -168,6 +168,24 @@ public class DatabaseManager {
         return false;
     }
 
+    public List<Double> getGrades(int course_id, int exam_id) {
+        List<Double> scores = new ArrayList<>();
+        String sql = "SELECT score FROM grades WHERE course_id =? AND exam_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, course_id);
+            stmt.setInt(2, exam_id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    scores.add(rs.getDouble("score"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to fetch grades: " + e.getMessage());
+        }
+        return scores;
+    }
+
 
     public List<Course> getAllCourses() {
         List<Course> courses = new ArrayList<>();
