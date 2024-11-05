@@ -84,6 +84,20 @@ public class DatabaseManager {
         }
     }
 
+    public void deleteGrade(int courseId, int studentId, int examId) {
+        String sql = "DELETE FROM grades WHERE course_id = ? AND student_id = ? AND exam_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, courseId);
+            stmt.setInt(2, studentId);
+            stmt.setInt(3, examId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to delete grade: " + e.getMessage());
+        }
+    }
+
+
     public Course getCourseById(int courseId) {
         String sql = "SELECT course_number, course_name, semester, student_amount FROM courses WHERE course_id = ?";
 

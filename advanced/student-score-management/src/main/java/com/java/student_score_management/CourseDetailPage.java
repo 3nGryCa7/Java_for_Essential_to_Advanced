@@ -32,8 +32,14 @@ public class CourseDetailPage extends JPanel {
         splitPane.setResizeWeight(0.5);
         add(splitPane, BorderLayout.CENTER);
 
+        JPanel buttonPanel = getButtonPanel();
+
+        add(buttonPanel, BorderLayout.EAST);
+    }
+
+    private JPanel getButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 1, 10, 10));
+        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));  // 將網格設為 3 行 1 列，以包含 3 個按鈕
 
         JButton addStudentButton = new JButton("Add Student");
         addStudentButton.addActionListener(e -> showAddStudentDialog());
@@ -43,7 +49,10 @@ public class CourseDetailPage extends JPanel {
         addGradeButton.addActionListener(e -> showAddGradeDialog());
         buttonPanel.add(addGradeButton);
 
-        add(buttonPanel, BorderLayout.EAST);
+        JButton deleteGradeButton = new JButton("Delete Grade");
+        deleteGradeButton.addActionListener(e -> deleteSelectedGrade());
+        buttonPanel.add(deleteGradeButton);
+        return buttonPanel;
     }
 
     private StudentTableModel loadStudentData() {
@@ -107,4 +116,23 @@ public class CourseDetailPage extends JPanel {
             gradeTable.setModel(loadGradeData());
         }
     }
+
+    private void deleteSelectedGrade() {
+        int selectedRow = gradeTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a score to delete.", "No score Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String studentNumber = (String) gradeTable.getValueAt(selectedRow, 0);
+        int studentId = databaseManager.getStudentId(studentNumber);
+        int examId = (int) gradeTable.getValueAt(selectedRow, 1);
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected score?", "Delete Score", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            databaseManager.deleteGrade(course.getCourseId(), studentId, examId);
+            gradeTable.setModel(loadGradeData());
+        }
+    }
+
 }
