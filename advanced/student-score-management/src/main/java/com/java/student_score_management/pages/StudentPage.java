@@ -57,6 +57,14 @@ public class StudentPage extends JPanel {
             String studentNumber = studentNumberField.getText();
             String name = nameField.getText();
 
+            if (name == null || name.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Student name cannot be empty or blank.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             if (databaseManager.studentExists(studentNumber)) {
                 JOptionPane.showMessageDialog(this,
                         "Duplicate student number " + studentNumber,

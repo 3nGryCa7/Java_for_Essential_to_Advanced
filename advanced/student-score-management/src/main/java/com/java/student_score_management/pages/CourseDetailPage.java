@@ -80,19 +80,18 @@ public class CourseDetailPage extends JPanel {
 
     private void showAddStudentDialog() {
         JTextField studentNumberField = new JTextField();
-        JTextField studentNameField = new JTextField();
 
-        Object[] message = {
-                "Student Number:", studentNumberField,
-                "Student Name:", studentNameField
-        };
+        Object[] message = {"Student Number:", studentNumberField};
 
         int option = JOptionPane.showConfirmDialog(this, message, "Add Student", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
             String studentNumber = studentNumberField.getText();
 
             if (databaseManager.studentExists(studentNumber)) {
-                JOptionPane.showMessageDialog(this, "Student " + studentNumber + " already in this course.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Student " + studentNumber + " already in this course.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

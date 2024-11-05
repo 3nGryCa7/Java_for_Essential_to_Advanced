@@ -71,8 +71,19 @@ public class CoursePage extends JPanel {
             String courseName = nameField.getText();
             int studentAmount = Integer.parseInt(capacityField.getText());
 
+            if (courseName == null || courseName.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Course name cannot be empty or blank.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             if (databaseManager.courseExists(courseCode, semester)) {
-                JOptionPane.showMessageDialog(this, "The course already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "The course already exists.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
