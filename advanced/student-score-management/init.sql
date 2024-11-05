@@ -2,7 +2,18 @@ CREATE TABLE students (
     student_id SERIAL PRIMARY KEY,
     student_number VARCHAR(10) NOT NULL,
     name VARCHAR(100) NOT NULL,
-    CONSTRAINT unique_student_number UNIQUE (student_number)
+    CONSTRAINT unique_student_number UNIQUE (student_number),
+    CONSTRAINT name_not_blank CHECK (TRIM(name) <> '')
+);
+
+CREATE TABLE courses (
+    course_id SERIAL PRIMARY KEY,
+    course_code VARCHAR(10) NOT NULL,
+    semester VARCHAR(4) NOT NULL,
+    course_name VARCHAR(100) NOT NULL,
+    student_amount INT NOT NULL,
+    CONSTRAINT unique_course_semester UNIQUE (course_code, semester),
+    CONSTRAINT course_name_not_blank CHECK (TRIM(course_name) <> '')
 );
 
 CREATE TABLE selected_courses (
@@ -19,15 +30,6 @@ CREATE TABLE grades (
     exam_id INT NOT NULL,
     score DECIMAL(5, 2) NOT NULL,
     CONSTRAINT unique_student_course_exam UNIQUE (course_id, student_id, exam_id)
-);
-
-CREATE TABLE courses (
-    course_id SERIAL PRIMARY KEY,
-    course_number VARCHAR(10) NOT NULL,
-    semester VARCHAR(4) NOT NULL,
-    course_name VARCHAR(100) NOT NULL,
-    student_amount INT NOT NULL,
-    CONSTRAINT unique_course_semester UNIQUE (course_number, semester)
 );
 
 INSERT INTO students (student_number, name) VALUES
@@ -58,7 +60,7 @@ INSERT INTO students (student_number, name) VALUES
 ('B11109084', '劉一珈');
 
 
-INSERT INTO courses (course_number, semester, course_name, student_amount) VALUES
+INSERT INTO courses (course_code, semester, course_name, student_amount) VALUES
 ('IM1008301', '1131', '進階物件導向程式語言', 21),
 ('IM1008302', '1132', '資料結構', 25),
 ('IM1008303', '1132', '資料庫系統', 12),
