@@ -1,4 +1,12 @@
-package com.java.student_score_management;
+package com.java.student_score_management.pages;
+
+import com.java.student_score_management.ChartGenerator;
+import com.java.student_score_management.DatabaseManager;
+import com.java.student_score_management.models.Course;
+import com.java.student_score_management.models.Grade;
+import com.java.student_score_management.models.Student;
+import com.java.student_score_management.table_models.GradeTableModel;
+import com.java.student_score_management.table_models.StudentTableModel;
 
 import java.util.List;
 import javax.swing.*;
@@ -84,7 +92,7 @@ public class CourseDetailPage extends JPanel {
             String studentNumber = studentNumberField.getText();
 
             if (databaseManager.studentExists(studentNumber)) {
-                JOptionPane.showMessageDialog(this, "Error: Student with ID " + studentNumber + " does not exist.", "Student Not Found", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Student " + studentNumber + " already in this course.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -112,7 +120,7 @@ public class CourseDetailPage extends JPanel {
             String score = scoreField.getText();
 
             if (databaseManager.studentExists(studentNumber)) {
-                JOptionPane.showMessageDialog(this, "Error: Student with ID " + studentNumber + " does not exist.", "Student Not Found", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The student " + studentNumber + " already exists in exam " + examId, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -143,13 +151,16 @@ public class CourseDetailPage extends JPanel {
     private void showExamDistributionGraph() {
         JTextField examIdField = new JTextField();
 
-        Object[] message = {
-                "Exam ID:", examIdField,
-        };
+        Object[] message = {"Exam ID:", examIdField};
 
         int option = JOptionPane.showConfirmDialog(this, message, "Show Distribution", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
             int examId = Integer.parseInt(examIdField.getText());
+
+            if (!databaseManager.examExists(course.getCourseId(), examId)) {
+                JOptionPane.showMessageDialog(this, "The exam id does not exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             List<Double> scores = databaseManager.getGrades(course.getCourseId(), examId);
             ChartGenerator generator = new ChartGenerator();

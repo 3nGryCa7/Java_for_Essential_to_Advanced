@@ -1,11 +1,16 @@
 package com.java.student_score_management;
 
+import com.java.student_score_management.models.Course;
+import com.java.student_score_management.models.Grade;
+import com.java.student_score_management.models.SelectedCourse;
+import com.java.student_score_management.models.Student;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5444/grade_management";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5444/score_management";
     private static final String DB_USER = "user";
     private static final String DB_PASSWORD = "password";
 
@@ -27,12 +32,11 @@ public class DatabaseManager {
         return connection;
     }
 
-
-    public void addCourse(String courseNumber, String semester, String courseName, int studentAmount) {
-        String sql = "INSERT INTO courses (course_number, semester, course_name, student_amount) VALUES (?, ?, ?, ?)";
+    public void addCourse(String courseCode, String semester, String courseName, int studentAmount) {
+        String sql = "INSERT INTO courses (course_code, semester, course_name, student_amount) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, courseNumber);
+            stmt.setString(1, courseCode);
             stmt.setString(2, semester);
             stmt.setString(3, courseName);
             stmt.setInt(4, studentAmount);
@@ -56,16 +60,21 @@ public class DatabaseManager {
         }
     }
 
-    public void addStudent(String studentNumber, String name) {
+    public void addStudent(String studentNumber, String name) throws SQLException {
         String sql = "INSERT INTO students (student_number, name) VALUES (?, ?)";
+
+        if (studentExists(studentNumber)) {
+            throw new SQLException("Duplicate student number");
+        }
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, studentNumber);
             stmt.setString(2, name);
             stmt.executeUpdate();
             System.out.println("Succeed add student: " + name);
+
         } catch (SQLException e) {
-            System.out.println("Failed to add student: " + e.getMessage());
+            throw new SQLException("database error.");
         }
     }
 
@@ -99,14 +108,14 @@ public class DatabaseManager {
 
 
     public Course getCourseById(int courseId) {
-        String sql = "SELECT course_number, course_name, semester, student_amount FROM courses WHERE course_id = ?";
+        String sql = "SELECT course_code, course_name, semester, student_amount FROM courses WHERE course_id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, courseId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Course(
-                            courseId, rs.getString("course_number"),
+                            courseId, rs.getString("course_code"),
                             rs.getString("course_name"), rs.getString("semester"),
                             rs.getInt("student_amount"));
                 }
@@ -153,17 +162,43 @@ public class DatabaseManager {
         return studentId;
     }
 
+    public boolean courseExists(String course_code, String semester) {
+        String sql = "SELECT 1 FROM courses WHERE course_code = ? AND semester = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, course_code);
+            stmt.setString(2, semester);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("Failed to check if course exists: " + e.getMessage());
+        }
+        return false;
+    }
+
     public boolean studentExists(String studentNumber) {
-        String sql = "SELECT COUNT(*) FROM students WHERE student_number = ?";
+        String sql = "SELECT 1 FROM students WHERE student_number = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, studentNumber);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) != 1;
-            }
+            return rs.next();
         } catch (SQLException e) {
             System.out.println("Failed to check if student exists: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean examExists(int courseId, int examId) {
+        String sql = "SELECT 1 FROM grades WHERE course_id = ? AND exam_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, courseId);
+            stmt.setInt(2, examId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("Failed to check if exam exists: " + e.getMessage());
         }
         return false;
     }
@@ -196,7 +231,7 @@ public class DatabaseManager {
 
             while (rs.next()) {
                 courses.add(new Course(
-                        rs.getInt("course_id"), rs.getString("course_number"),
+                        rs.getInt("course_id"), rs.getString("course_code"),
                         rs.getString("semester"), rs.getString("course_name"),
                         rs.getInt("student_amount")));
             }

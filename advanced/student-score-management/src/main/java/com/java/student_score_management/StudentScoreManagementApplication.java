@@ -1,5 +1,8 @@
 package com.java.student_score_management;
 
+import com.java.student_score_management.pages.CoursePage;
+import com.java.student_score_management.pages.StudentPage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;

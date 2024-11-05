@@ -1,4 +1,4 @@
-package com.java.student_score_management;
+package com.java.student_score_management.models;
 public class Course {
     private int courseId;
     private String courseNumber;

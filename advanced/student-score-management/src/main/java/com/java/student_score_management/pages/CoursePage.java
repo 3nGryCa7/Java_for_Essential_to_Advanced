@@ -1,4 +1,8 @@
-package com.java.student_score_management;
+package com.java.student_score_management.pages;
+
+import com.java.student_score_management.DatabaseManager;
+import com.java.student_score_management.models.Course;
+import com.java.student_score_management.table_models.CourseTableModel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -53,7 +57,7 @@ public class CoursePage extends JPanel {
         JTextField capacityField = new JTextField();
 
         Object[] message = {
-                "Course Number:", courseCodeField,
+                "Course Code:", courseCodeField,
                 "Semester:", semesterField,
                 "Course Name:", nameField,
                 "Student Amount:", capacityField
@@ -61,10 +65,18 @@ public class CoursePage extends JPanel {
 
         int option = JOptionPane.showConfirmDialog(this, message, "New Course", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
-            databaseManager.addCourse(
-                    courseCodeField.getText(), semesterField.getText(),
-                    nameField.getText(), Integer.parseInt(capacityField.getText())
-            );
+
+            String courseCode = courseCodeField.getText();
+            String semester = semesterField.getText();
+            String courseName = nameField.getText();
+            int studentAmount = Integer.parseInt(capacityField.getText());
+
+            if (databaseManager.courseExists(courseCode, semester)) {
+                JOptionPane.showMessageDialog(this, "The course already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            databaseManager.addCourse(courseCode, semester, courseName, studentAmount);
             courseTable.setModel(loadCourseData());
         }
     }

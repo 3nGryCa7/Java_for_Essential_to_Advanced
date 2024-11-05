@@ -1,4 +1,6 @@
-package com.java.student_score_management;
+package com.java.student_score_management.table_models;
+
+import com.java.student_score_management.models.Student;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
