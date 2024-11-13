@@ -53,12 +53,12 @@ public class CourseDetailPage extends JPanel {
         addStudentButton.addActionListener(e -> showAddStudentDialog());
         buttonPanel.add(addStudentButton);
 
-        JButton addGradeButton = new JButton("Add Grade");
-        addGradeButton.addActionListener(e -> showAddGradeDialog());
+        JButton addGradeButton = new JButton("Add Score");
+        addGradeButton.addActionListener(e -> showAddScoreDialog());
         buttonPanel.add(addGradeButton);
 
-        JButton deleteGradeButton = new JButton("Delete Grade");
-        deleteGradeButton.addActionListener(e -> deleteSelectedGrade());
+        JButton deleteGradeButton = new JButton("Delete Score");
+        deleteGradeButton.addActionListener(e -> deleteSelectedScore());
         buttonPanel.add(deleteGradeButton);
 
         JButton showGraphButton = new JButton("Exam Distribution");
@@ -101,7 +101,7 @@ public class CourseDetailPage extends JPanel {
         }
     }
 
-    private void showAddGradeDialog() {
+    private void showAddScoreDialog() {
         JTextField studentNumberField = new JTextField();
         JTextField examIdField = new JTextField();
         JTextField scoreField = new JTextField();
@@ -129,7 +129,7 @@ public class CourseDetailPage extends JPanel {
         }
     }
 
-    private void deleteSelectedGrade() {
+    private void deleteSelectedScore() {
         int selectedRow = gradeTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a score to delete.", "No score Selected", JOptionPane.WARNING_MESSAGE);
