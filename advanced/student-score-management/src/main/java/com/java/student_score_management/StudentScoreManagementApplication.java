@@ -2,6 +2,7 @@ package com.java.student_score_management;
 
 import com.java.student_score_management.pages.CoursePage;
 import com.java.student_score_management.pages.StudentPage;
+import com.java.student_score_management.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,23 +21,27 @@ public class StudentScoreManagementApplication extends JFrame {
         }
 
         setTitle("Student Score Management System");
-        setSize(800, 600);
+        setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        JPanel menuPanel = new JPanel(new GridLayout(1, 8));
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Functions");
+        menuBar.add(menuPanel);
+
         JMenuItem courseMenuItem = new JMenuItem("Courses");
+        courseMenuItem.setHorizontalAlignment(SwingConstants.CENTER);
+
         JMenuItem studentMenuItem = new JMenuItem("Students");
+        studentMenuItem.setHorizontalAlignment(SwingConstants.CENTER);
 
         courseMenuItem.addActionListener(e -> showCoursePage());
-
         studentMenuItem.addActionListener(e -> showStudentPage());
 
-        menu.add(courseMenuItem);
-        menu.add(studentMenuItem);
-        menuBar.add(menu);
+        menuPanel.add(courseMenuItem);
+        menuPanel.add(studentMenuItem);
         setJMenuBar(menuBar);
+        setVisible(true);
     }
 
     private void showCoursePage() {
