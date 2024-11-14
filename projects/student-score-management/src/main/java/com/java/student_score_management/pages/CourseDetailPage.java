@@ -45,6 +45,7 @@ public class CourseDetailPage extends JPanel {
         add(buttonPanel, BorderLayout.EAST);
     }
 
+    @SuppressWarnings("unused")
     private JPanel getButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4, 1, 10, 10));

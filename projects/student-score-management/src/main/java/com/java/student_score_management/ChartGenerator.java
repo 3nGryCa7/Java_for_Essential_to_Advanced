@@ -7,7 +7,6 @@ import org.jfree.chart.JFreeChart;
 import javax.swing.*;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 public class ChartGenerator {
@@ -15,9 +14,6 @@ public class ChartGenerator {
     public ChartGenerator() {}
 
     public void displayGradeDistributionChart(List<Double> grades) {
-        double mean = calculateMean(grades);
-        double stdDev = calculateStandardDeviation(grades, mean);
-
         HistogramDataset dataset = new HistogramDataset();
         dataset.addSeries("Grades", grades.stream().mapToDouble(Double::doubleValue).toArray(), 10);
 
@@ -32,7 +28,6 @@ public class ChartGenerator {
                 false
         );
 
-        XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesLinesVisible(0, true);
 

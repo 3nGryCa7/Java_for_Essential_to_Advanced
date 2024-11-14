@@ -1,7 +1,5 @@
 package com.java.student_score_management.utils;
 
-import org.yaml.snakeyaml.scanner.Constant;
-
 public class Constants {
     private Constants() {}
 

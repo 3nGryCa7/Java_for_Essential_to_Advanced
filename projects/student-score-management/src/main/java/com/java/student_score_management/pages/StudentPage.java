@@ -16,6 +16,7 @@ public class StudentPage extends JPanel {
     private final DatabaseManager databaseManager;
     private JTable studentTable;
 
+    @SuppressWarnings("unused")
     public StudentPage(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
         setLayout(new BorderLayout());

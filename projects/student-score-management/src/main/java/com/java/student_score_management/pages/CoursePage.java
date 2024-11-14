@@ -14,6 +14,7 @@ public class CoursePage extends JPanel {
     private final DatabaseManager databaseManager;
     private JTable courseTable;
 
+    @SuppressWarnings("unused")
     public CoursePage(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
         setLayout(new BorderLayout());

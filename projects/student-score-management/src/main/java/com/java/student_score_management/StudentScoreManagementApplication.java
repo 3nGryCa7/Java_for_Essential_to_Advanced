@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public class StudentScoreManagementApplication extends JFrame {
     private DatabaseManager databaseManager;
 
+    @SuppressWarnings("unused")
     public StudentScoreManagementApplication() {
         try {
             databaseManager = DatabaseManager.getInstance();
