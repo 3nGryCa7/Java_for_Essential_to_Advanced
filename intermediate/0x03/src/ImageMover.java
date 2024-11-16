@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 public class ImageMover extends JFrame {
 
-    private JLabel imageLabel;
+    private final JLabel imageLabel;
     private int mouseX, mouseY;
 
     public ImageMover() {
@@ -25,8 +25,8 @@ public class ImageMover extends JFrame {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                mouseX = e.getX();
-                mouseY = e.getY();
+                mouseX = e.getXOnScreen();
+                mouseY = e.getYOnScreen();
             }
 
             @Override

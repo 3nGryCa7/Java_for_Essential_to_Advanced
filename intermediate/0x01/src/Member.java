@@ -1,4 +1,3 @@
-
 enum Sex {
 	MALE, FEMALE
 }
@@ -37,7 +36,7 @@ public class Member {
 	}
 
 	public String toString () {
-            // return "Member:"+name+" "+phoneString;
+        // return "Member:"+name+" "+phoneString;
 		String vipinfo = vip ? "VIP":"";
 		return name+": " +birthday+" "+sex+" "+bloodType+" "+phoneString+" "+vipinfo;
 	}
