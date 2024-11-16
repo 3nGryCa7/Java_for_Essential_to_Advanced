@@ -31,21 +31,21 @@ Various function to support the course management.
 ![img_3.png](public/img_3.png)
 
 ### C. Delete the score
-- Select a score
-  ![img_4.png](public/img_4.png)
+#### Select a score
+![img_4.png](public/img_4.png)
 
-- Delete the score
-  ![img_5.png](public/img_5.png)
+#### Delete the score
+![img_5.png](public/img_5.png)
 
 ### D. Exam score distribution
-- Find exam id
-  ![img_7.png](public/img_7.png)
+#### Find exam id
+![img_7.png](public/img_7.png)
 
-- Enter exam id
-  ![img_8.png](public/img_8.png)
+#### Enter exam id
+![img_8.png](public/img_8.png)
   
-- Show graph
-  ![img_9.png](public/img_9.png)
+#### Show graph
+![img_9.png](public/img_9.png)
 
 ## Student Page
 List all students;
