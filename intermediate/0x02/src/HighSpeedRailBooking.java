@@ -43,14 +43,17 @@ public class HighSpeedRailBooking extends JFrame {
 
         add(startLabel);
         add(startComboBox);
+
         add(endLabel);
         add(endComboBox);
+
         add(ticketTypeLabel);
         JPanel ticketTypePanel = new JPanel();
         ticketTypePanel.add(noneFare);
         ticketTypePanel.add(fullFare);
         ticketTypePanel.add(halfFare);
         add(ticketTypePanel);
+
         add(ticketCountLabel);
         JPanel countPanel = new JPanel();
         countPanel.add(noneTicket);
@@ -58,6 +61,7 @@ public class HighSpeedRailBooking extends JFrame {
         countPanel.add(twoTickets);
         countPanel.add(threeTickets);
         add(countPanel);
+
         add(new JLabel()); // blank
         add(bookButton);
 

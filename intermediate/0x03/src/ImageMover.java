@@ -46,6 +46,6 @@ public class ImageMover extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ImageMover());
+        SwingUtilities.invokeLater(ImageMover::new);
     }
 }

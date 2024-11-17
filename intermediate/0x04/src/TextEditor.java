@@ -11,7 +11,6 @@ public class TextEditor extends JFrame implements ActionListener {
     private JMenuItem openItem, saveItem, closeItem;
 
     public TextEditor() {
-        // 設定 JFrame 視窗屬性
         setTitle("Text Editor");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,20 +46,16 @@ public class TextEditor extends JFrame implements ActionListener {
         // 將捲軸（含 JTextArea）加到 JFrame
         add(scrollPane, BorderLayout.CENTER);
 
-        // 顯示視窗
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == openItem) {
-            // 開啟檔案
             openFile();
         } else if (e.getSource() == saveItem) {
-            // 儲存檔案
             saveFile();
         } else if (e.getSource() == closeItem) {
-            // 清除 JTextArea
             textArea.setText("");
         }
     }
@@ -94,7 +89,6 @@ public class TextEditor extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        // 啟動文字編輯器
         SwingUtilities.invokeLater(TextEditor::new);
     }
 }
