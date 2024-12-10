@@ -54,7 +54,8 @@ public class DatabaseManager {
             stmt.setInt(1, course_id);
             stmt.setInt(2, student_id);
             stmt.executeUpdate();
-            System.out.println("Succeed add student" + student_id + " into course: " + course_id);
+            System.out.println("Succeed add student_id=" + student_id + " into course: " + course_id);
+
         } catch (SQLException e) {
             System.out.println("Failed to add student into course: " + e.getMessage());
         }
@@ -185,6 +186,35 @@ public class DatabaseManager {
             return rs.next();
         } catch (SQLException e) {
             System.out.println("Failed to check if student exists: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean studentExistsInCourse(int studentId, int courseId) {
+        String sql = "SELECT 1 FROM selected_courses WHERE student_id = ? AND course_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            stmt.setInt(2, courseId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("[ERROR] Database: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean studentExistsInCourseExam(int studentId, int courseId, int examId) {
+        String sql = "SELECT 1 FROM grades WHERE student_id = ? AND course_id = ? AND exam_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, studentId);
+            stmt.setInt(2, courseId);
+            stmt.setInt(3, examId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("[ERROR] Database: " + e.getMessage());
         }
         return false;
     }

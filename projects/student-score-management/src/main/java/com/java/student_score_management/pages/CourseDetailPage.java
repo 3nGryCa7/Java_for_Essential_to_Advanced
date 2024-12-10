@@ -88,7 +88,16 @@ public class CourseDetailPage extends JPanel {
         if (option == JOptionPane.OK_OPTION) {
             String studentNumber = studentNumberField.getText();
 
-            if (databaseManager.studentExists(studentNumber)) {
+            int studentId = databaseManager.getStudentId(studentNumber);
+            if (studentId < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Student " + studentNumber + " is not found.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (databaseManager.studentExistsInCourse(studentId, course.getCourseId())) {
                 JOptionPane.showMessageDialog(this,
                         "Student " + studentNumber + " already in this course.",
                         "Error",
@@ -96,7 +105,6 @@ public class CourseDetailPage extends JPanel {
                 return;
             }
 
-            int studentId = databaseManager.getStudentId(studentNumber);
             databaseManager.addSelectedCourse(course.getCourseId(), studentId);
             studentTable.setModel(loadStudentData());
         }
@@ -116,16 +124,27 @@ public class CourseDetailPage extends JPanel {
         int option = JOptionPane.showConfirmDialog(this, message, "Add Grade", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
             String studentNumber = studentNumberField.getText();
-            String examId = examIdField.getText();
+            int examId = Integer.parseInt(examIdField.getText());
             String score = scoreField.getText();
 
-            if (databaseManager.studentExists(studentNumber)) {
-                JOptionPane.showMessageDialog(this, "The student " + studentNumber + " already exists in exam " + examId, "Error", JOptionPane.ERROR_MESSAGE);
+            int studentId = databaseManager.getStudentId(studentNumber);
+            if (studentId < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "The student " + studentNumber + " is not found.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            int studentId = databaseManager.getStudentId(studentNumber);
-            databaseManager.addGrade(course.getCourseId(), studentId, Integer.parseInt(examId), Double.parseDouble(score));
+            if (!databaseManager.studentExistsInCourse(studentId, course.getCourseId())) {
+                JOptionPane.showMessageDialog(this,
+                        "The student " + studentNumber + " does not enroll in the course.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            databaseManager.addGrade(course.getCourseId(), studentId, examId, Double.parseDouble(score));
             gradeTable.setModel(loadGradeData());
         }
     }
