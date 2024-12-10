@@ -41,7 +41,8 @@ public class WebContentViewer extends JFrame {
                     try {
                         editorPane.setPage(e.getURL());
                     } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(WebContentViewer.this, "Cannot load content from url.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(WebContentViewer.this,
+                                "Cannot load content from url.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }

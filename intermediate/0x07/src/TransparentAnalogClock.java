@@ -38,7 +38,8 @@ public class TransparentAnalogClock extends JPanel {
 
         // 畫時鐘圓框
         g2d.setColor(Color.BLACK);
-        g2d.drawOval(centerX - clockRadius, centerY - clockRadius, 2 * clockRadius, 2 * clockRadius);
+        g2d.drawOval(centerX - clockRadius, centerY - clockRadius,
+                2 * clockRadius, 2 * clockRadius);
 
         // 畫刻度和數字
         drawClockMarks(g2d);
@@ -49,7 +50,7 @@ public class TransparentAnalogClock extends JPanel {
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
 
-        drawHand(g2d, hour * 30 + minute / 2, clockRadius * 0.5, Color.BLACK);  // 時針
+        drawHand(g2d, hour * 30 + (double) minute / 2, clockRadius * 0.5, Color.BLACK);  // 時針
         drawHand(g2d, minute * 6, clockRadius * 0.7, Color.BLUE);                // 分針
         drawHand(g2d, second * 6, clockRadius * 0.9, Color.RED);                 // 秒針
     }

@@ -71,7 +71,8 @@ public class HighSpeedRailBooking extends JFrame {
                 String startStation = (String) startComboBox.getSelectedItem();
                 String endStation = (String) endComboBox.getSelectedItem();
                 String ticketType = noneFare.isSelected() ? "None" : (fullFare.isSelected() ? "Full Fare" : "Half Fare");
-                String ticketCount = noneTicket.isSelected() ? "None" : (oneTicket.isSelected() ? "1 Ticket" : (twoTickets.isSelected() ? "2 Tickets" : "3 Tickets"));
+                String ticketCount = noneTicket.isSelected() ? "None" : (oneTicket.isSelected() ? "1 Ticket" :
+                        (twoTickets.isSelected() ? "2 Tickets" : "3 Tickets"));
 
                 // Validation
                 if (startStation.equals("None") || 
@@ -89,7 +90,6 @@ public class HighSpeedRailBooking extends JFrame {
                 }
             }
         });
-
         setVisible(true);
     }
 
