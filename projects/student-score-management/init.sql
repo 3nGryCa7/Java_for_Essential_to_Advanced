@@ -11,7 +11,7 @@ CREATE TABLE courses (
     course_code VARCHAR(10) NOT NULL,
     semester VARCHAR(4) NOT NULL,
     course_name VARCHAR(100) NOT NULL,
-    student_amount INT NOT NULL,
+    student_amount INT DEFAULT 0 NOT NULL,
     CONSTRAINT unique_course_semester UNIQUE (course_code, semester),
     CONSTRAINT course_name_not_blank CHECK (TRIM(course_name) <> '')
 );
@@ -39,7 +39,7 @@ INSERT INTO students (student_number, name) VALUES
 ('B11109063', '葉旭凡'),
 ('B11109064', '黃喬欣'),
 ('B11109065', '黃嘉溪'),
-('B11109066', '王凡恩'),
+('B11109066', '王凡溪'),
 ('B11109067', '蕭俊安'),
 ('B11109068', '洪俊熙'),
 ('B11109069', '洪千棋'),
@@ -60,11 +60,11 @@ INSERT INTO students (student_number, name) VALUES
 ('B11109084', '劉一珈');
 
 
-INSERT INTO courses (course_code, semester, course_name, student_amount) VALUES
-('IM1008301', '1131', '進階物件導向程式語言', 21),
-('IM1008302', '1132', '資料結構', 25),
-('IM1008303', '1132', '資料庫系統', 12),
-('IM1008304', '1131', '演算法', 18);
+INSERT INTO courses (course_code, semester, course_name) VALUES
+('IM1008301', '1131', '進階物件導向程式語言'),
+('IM1008302', '1132', '資料結構'),
+('IM1008303', '1132', '資料庫系統'),
+('IM1008304', '1131', '演算法');
 
 INSERT INTO selected_courses (course_id, student_id) VALUES
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11),
@@ -75,6 +75,10 @@ INSERT INTO selected_courses (course_id, student_id) VALUES
 (3, 1), (3, 3), (3, 4), (3, 5), (3, 7), (3, 8), (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 20),
 (4, 1), (4, 5), (4, 6), (4, 10), (4, 11), (4, 12), (4, 13), (4, 14), (4, 15), (4, 16), (4, 17),
 (4, 18), (4, 19), (4, 20), (4, 21), (4, 22), (4, 23), (4, 24);
+
+UPDATE courses SET student_amount = (
+    SELECT COUNT(*) FROM selected_courses
+    WHERE selected_courses.course_id = courses.course_id);
 
 -- For each student in selected_courses, generate a grade for exam_id = 1
 INSERT INTO grades (course_id, student_id, exam_id, score)

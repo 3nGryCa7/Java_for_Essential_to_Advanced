@@ -1,0 +1,52 @@
+[
+  {
+    "courseNumber": "IM1008305",
+    "semester": "1131",
+    "courseName": "作業系統"
+  },
+  {
+    "courseNumber": "IM1008306",
+    "semester": "1132",
+    "courseName": "計算機網路"
+  },
+  {
+    "courseNumber": "IM1008307",
+    "semester": "1131",
+    "courseName": "人工智慧"
+  },
+  {
+    "courseNumber": "IM1008308",
+    "semester": "1132",
+    "courseName": "軟體工程"
+  },
+  {
+    "courseNumber": "IM1008309",
+    "semester": "1131",
+    "courseName": "資料探勘"
+  },
+  {
+    "courseNumber": "IM1008310",
+    "semester": "1132",
+    "courseName": "自然語言處理"
+  },
+  {
+    "courseNumber": "IM1008311",
+    "semester": "1131",
+    "courseName": "物件導向程式語言"
+  },
+  {
+    "courseNumber": "IM1008312",
+    "semester": "1132",
+    "courseName": "威脅狩獵"
+  },
+  {
+    "courseNumber": "IM1008313",
+    "semester": "1132",
+    "courseName": "軟體開發與維運"
+  },
+  {
+    "courseNumber": "IM1008314",
+    "semester": "1131",
+    "courseName": "高等演算法"
+  }
+]

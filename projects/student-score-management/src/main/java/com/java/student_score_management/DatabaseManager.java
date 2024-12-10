@@ -1,5 +1,8 @@
 package com.java.student_score_management;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import com.java.student_score_management.models.Course;
 import com.java.student_score_management.models.Grade;
 import com.java.student_score_management.models.SelectedCourse;
@@ -32,14 +35,13 @@ public class DatabaseManager {
         return connection;
     }
 
-    public void addCourse(String courseCode, String semester, String courseName, int studentAmount) {
-        String sql = "INSERT INTO courses (course_code, semester, course_name, student_amount) VALUES (?, ?, ?, ?)";
+    public void addCourse(String courseCode, String semester, String courseName) {
+        String sql = "INSERT INTO courses (course_code, semester, course_name) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, courseCode);
             stmt.setString(2, semester);
             stmt.setString(3, courseName);
-            stmt.setInt(4, studentAmount);
             stmt.executeUpdate();
             System.out.println("Succeed add course: " + courseName);
         } catch (SQLException e) {
@@ -87,7 +89,7 @@ public class DatabaseManager {
             stmt.setString(1, studentNumber);
             stmt.setString(2, name);
             stmt.executeUpdate();
-            System.out.println("Succeed add student: " + name);
+            System.out.println("Succeed add student: " + studentNumber);
 
         } catch (SQLException e) {
             throw new SQLException("database error.");
@@ -103,7 +105,7 @@ public class DatabaseManager {
             stmt.setInt(3, examId);
             stmt.setDouble(4, score);
             stmt.executeUpdate();
-            System.out.println("Succeed add score: " + score + " for student " + studentId);
+            System.out.println("Succeed add score: " + score + " for student id: " + studentId);
         } catch (SQLException e) {
             System.out.println("Failed to add score: " + e.getMessage());
         }

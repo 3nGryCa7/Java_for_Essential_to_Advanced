@@ -1,11 +1,17 @@
 package com.java.student_score_management.pages;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.student_score_management.DatabaseManager;
 import com.java.student_score_management.models.Course;
+import com.java.student_score_management.models.Student;
 import com.java.student_score_management.table_models.CourseTableModel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +29,9 @@ public class CoursePage extends JPanel {
         JScrollPane courseScrollPane = new JScrollPane(courseTable);
         add(courseScrollPane, BorderLayout.CENTER);
 
+        JPanel buttonPanel = getButtonPanel();
+        add(buttonPanel, BorderLayout.SOUTH);
+
         courseTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -33,10 +42,20 @@ public class CoursePage extends JPanel {
                 }
             }
         });
+    }
 
-        JButton addCourseButton = new JButton("New Course");
+    private JPanel getButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT)); // Align buttons to the right (optional)
+
+        JButton addCourseButton = new JButton("Add Course");
         addCourseButton.addActionListener(e -> showAddCourseDialog());
-        add(addCourseButton, BorderLayout.SOUTH);
+        buttonPanel.add(addCourseButton);
+
+        JButton importCourseButton = new JButton("Import Course");
+        importCourseButton.addActionListener(e -> showImportCourseDialog());
+        buttonPanel.add(importCourseButton);
+        return buttonPanel;
     }
 
     private CourseTableModel loadCourseData() {
@@ -55,13 +74,11 @@ public class CoursePage extends JPanel {
         JTextField courseCodeField = new JTextField();
         JTextField semesterField = new JTextField();
         JTextField nameField = new JTextField();
-        JTextField capacityField = new JTextField();
 
         Object[] message = {
                 "Course Code:", courseCodeField,
                 "Semester:", semesterField,
                 "Course Name:", nameField,
-                "Student Amount:", capacityField
         };
 
         int option = JOptionPane.showConfirmDialog(this, message, "New Course", JOptionPane.OK_CANCEL_OPTION);
@@ -70,7 +87,6 @@ public class CoursePage extends JPanel {
             String courseCode = courseCodeField.getText();
             String semester = semesterField.getText();
             String courseName = nameField.getText();
-            int studentAmount = Integer.parseInt(capacityField.getText());
 
             if (courseName == null || courseName.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this,
@@ -88,8 +104,63 @@ public class CoursePage extends JPanel {
                 return;
             }
 
-            databaseManager.addCourse(courseCode, semester, courseName, studentAmount);
+            databaseManager.addCourse(courseCode, semester, courseName);
             courseTable.setModel(loadCourseData());
         }
+    }
+
+
+    private void showImportCourseDialog() {
+        // Step 1: Let the user select a JSON file
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select Course Data JSON File");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                // Step 2: Parse JSON file into list of students
+                List<Course> courses = parseJsonFile(selectedFile);
+
+                // Step 3: Verify structure
+                for (Course course : courses) {
+                    if (!isValidCourse(course)) {
+                        JOptionPane.showMessageDialog(this,
+                                "Invalid course data structure: " + course,
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                // Step 4: Insert into the database
+                for (Course course : courses) {
+                    if (!databaseManager.courseExists(course.getCourseNumber(), course.getCourseName())) {
+                        databaseManager.addCourse(course.getCourseNumber(), course.getSemester(), course.getCourseName());
+                    }
+                }
+
+                courseTable.setModel(loadCourseData());
+                JOptionPane.showMessageDialog(this, "Courses imported successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Failed to import students: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private List<Course> parseJsonFile(File file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(file, new TypeReference<List<Course>>() {});
+    }
+
+    private boolean isValidCourse(Course course) {
+        return course.getCourseName() != null && course.getCourseNumber().matches("IM\\d{7}") &&
+                course.getSemester() != null && !course.getCourseNumber().trim().isEmpty();
     }
 }

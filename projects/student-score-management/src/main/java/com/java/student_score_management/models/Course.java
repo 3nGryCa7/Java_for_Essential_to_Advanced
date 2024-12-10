@@ -14,6 +14,8 @@ public class Course {
         this.studentAmount = studentAmount;
     }
 
+    public Course() {}
+
     public int getCourseId() {
         return courseId;
     }
