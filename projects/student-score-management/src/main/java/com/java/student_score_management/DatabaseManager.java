@@ -47,6 +47,21 @@ public class DatabaseManager {
         }
     }
 
+    public void updateStudentAmount(int course_id) {
+        String sql = "UPDATE courses SET student_amount = (" +
+                "SELECT COUNT(*) FROM selected_courses WHERE course_id = ?" +
+                ") WHERE course_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, course_id);
+            stmt.setInt(2, course_id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Failed to add student into course: " + e.getMessage());
+        }
+    }
+
     public void addSelectedCourse(int course_id, int student_id) {
         String sql = "INSERT INTO selected_courses (course_id, student_id) VALUES (?, ?)";
 

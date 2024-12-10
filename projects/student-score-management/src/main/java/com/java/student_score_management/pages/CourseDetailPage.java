@@ -106,6 +106,7 @@ public class CourseDetailPage extends JPanel {
             }
 
             databaseManager.addSelectedCourse(course.getCourseId(), studentId);
+            databaseManager.updateStudentAmount(course.getCourseId());
             studentTable.setModel(loadStudentData());
         }
     }
