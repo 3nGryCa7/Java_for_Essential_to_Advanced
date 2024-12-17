@@ -22,7 +22,7 @@ public class StudentScoreManagementApplication extends JFrame {
         }
 
         setTitle("Student Score Management System");
-        setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+        setSize(Constants.FRAME_800, Constants.FRAME_600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 

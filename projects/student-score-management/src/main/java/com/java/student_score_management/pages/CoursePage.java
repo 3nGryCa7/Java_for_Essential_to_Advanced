@@ -20,7 +20,6 @@ public class CoursePage extends JPanel {
     private final DatabaseManager databaseManager;
     private JTable courseTable;
 
-    @SuppressWarnings("unused")
     public CoursePage(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
         setLayout(new BorderLayout());
@@ -111,7 +110,6 @@ public class CoursePage extends JPanel {
 
 
     private void showImportCourseDialog() {
-        // Step 1: Let the user select a JSON file
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select Course Data JSON File");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -120,10 +118,8 @@ public class CoursePage extends JPanel {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                // Step 2: Parse JSON file into list of students
                 List<Course> courses = parseJsonFile(selectedFile);
 
-                // Step 3: Verify structure
                 for (Course course : courses) {
                     if (!isValidCourse(course)) {
                         JOptionPane.showMessageDialog(this,

@@ -184,7 +184,7 @@ public class CourseDetailPage extends JPanel {
 
             List<Double> scores = databaseManager.getGrades(course.getCourseId(), examId);
             ChartGenerator generator = new ChartGenerator();
-            generator.displayGradeDistributionChart(scores);
+            generator.showCharts(scores);
         }
     }
 }

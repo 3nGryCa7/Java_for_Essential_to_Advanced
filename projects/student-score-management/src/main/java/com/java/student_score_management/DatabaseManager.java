@@ -1,8 +1,5 @@
 package com.java.student_score_management;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.java.student_score_management.models.Course;
 import com.java.student_score_management.models.Grade;
 import com.java.student_score_management.models.SelectedCourse;
